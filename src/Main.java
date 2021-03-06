@@ -3,5 +3,6 @@ public class Main {
         Menu.menu();
 
         System.out.println("SIemano");
+        System.out.println("SIemano");
     }
 }
