@@ -41,7 +41,8 @@ public class Student extends Osoba{
         this.rok = rok;
     }
 
-    public static void zarejestrjStudenta() {
+    public static void zarejestrjStudenta() { //metoda rejestrująca nowego studenta
+
         Student nowyStudent = new Student();
         Scanner scan = new Scanner(System.in);
         System.out.println("Wprowadź nowego studenta:");
@@ -51,20 +52,20 @@ public class Student extends Osoba{
         nowyStudent.setNazwisko(scan.nextLine());
         System.out.println("Plec (M/K): ");
         String plecForEnum = scan.nextLine();
-        Plec plecToEnum = Plec.valueOf(plecForEnum);
+        Plec plecToEnum = Plec.valueOf(plecForEnum); //konwertuje string na enum
         nowyStudent.setPlec(plecToEnum);
         System.out.println("Wiek: ");
         nowyStudent.setWiek(scan.nextInt());
-        scan.nextLine();
+        scan.nextLine(); //czyta enter
         System.out.println("Pesel: ");
         nowyStudent.setPesel(scan.nextLong());
-        scan.nextLine();
+        scan.nextLine(); //czyta enter
         System.out.println("Adres: ");
         nowyStudent.setAdres(scan.nextLine());
         System.out.println("Kierunek - podaj liczbę: (1.Informatyka, 2.Zarzadzanie, 3.Filologia) ");
         int podajKierunek = scan.nextInt();
         scan.nextLine();
-        switch(podajKierunek) {
+        switch(podajKierunek) { //po podaniu numeru switch dobiera odpowiedni kierunek
             case 1:
                 nowyStudent.setKierunek(Kierunek.Informatyka);
                 break;
@@ -77,16 +78,16 @@ public class Student extends Osoba{
 
         System.out.println("Rok studiów: ");
         nowyStudent.setRok(scan.nextInt());
-        scan.nextLine();
-        studenci.add(nowyStudent);
+        scan.nextLine(); //czyta enter
+        studenci.add(nowyStudent); //dodaje nowy obiekt student odreślony przz zmienne wprowadzione przez usera do kolekcji
     }
 
     public static void wyswietlStudentow() {
         int a = 0;
-        if (!Student.studenci.isEmpty()) {
+        if (!Student.studenci.isEmpty()) { //jeseli kolekcja jest pusta
             System.out.println("Lista studentów na uczelni: ");
 
-            for(Iterator var1 = Student.studenci.iterator(); var1.hasNext(); ++a) {
+            for(Iterator var1 = Student.studenci.iterator(); var1.hasNext(); ++a) { //Agata pamietasz??
                 Student studenci = (Student)var1.next();
                 System.out.println(studenci);
             }
