@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+.idea
+*.iml
+*.zip
+*.jar
+*.war
+*.log
+*.ctxt
+*.xml
+
