@@ -15,11 +15,6 @@ public class Student extends Osoba{
     Student() {
     }
 
-    public Student(String imie, String nazwisko, Kierunek kierunek, Integer rok) {
-        super(imie, nazwisko);
-        this.kierunek = kierunek;
-        this.rok = rok;
-    }
 
     public String getKierunek() {
         return this.kierunek.toString();
@@ -65,38 +60,32 @@ public class Student extends Osoba{
         System.out.println("Kierunek - podaj liczbę: (1.Informatyka, 2.Zarzadzanie, 3.Filologia) ");
         int podajKierunek = scan.nextInt();
         scan.nextLine();
-        switch(podajKierunek) { //po podaniu numeru switch dobiera odpowiedni kierunek
-            case 1:
-                nowyStudent.setKierunek(Kierunek.Informatyka);
-                break;
-            case 2:
-                nowyStudent.setKierunek(Kierunek.Zarzadzanie);
-                break;
-            case 3:
-                nowyStudent.setKierunek(Kierunek.Filologia);
+        //po podaniu numeru switch dobiera odpowiedni kierunek
+        switch (podajKierunek) {
+            case 1 -> nowyStudent.setKierunek(Kierunek.Informatyka);
+            case 2 -> nowyStudent.setKierunek(Kierunek.Zarzadzanie);
+            case 3 -> nowyStudent.setKierunek(Kierunek.Filologia);
         }
 
         System.out.println("Rok studiów: ");
         nowyStudent.setRok(scan.nextInt());
         scan.nextLine(); //czyta enter
-        studenci.add(nowyStudent); //dodaje nowy obiekt student odreślony przz zmienne wprowadzione przez usera do kolekcji
+        studenci.add(nowyStudent); //dodaje nowy obiekt student odreślony przez zmienne wprowadzione przez usera do kolekcji
     }
 
     public static void wyswietlStudentow() {
-        int a = 0;
-        if (!Student.studenci.isEmpty()) { //jeseli kolekcja jest pusta
-            System.out.println("Lista studentów na uczelni: ");
-
-            for(Iterator var1 = Student.studenci.iterator(); var1.hasNext(); ++a) { //Agata pamietasz??
-                Student studenci = (Student)var1.next();
-                System.out.println(studenci);
+        int a = 0; // counter, liczy studentow
+        if(!studenci.isEmpty()){ //if lista rozna 0
+            System.out.println ("Lista studentów na uczelni: ");
+            for (Student studenci: studenci){
+                System.out.println (studenci);
+                a++;
             }
-
-            System.out.println("Ilość studentów na uczekni: " + a);
-        } else {
-            System.out.println("W sytemie nie ma wprowadzonch studentów!");
+            System.out.println("Ilość studentów na uczekni: " + a); // wykorzystuje counter
         }
-
+        else {
+            System.out.println("W sytemie nie ma wprowadzonch studentów!"); //w przypadku kiedy liste jest pusta
+        }
     }
 
     public static void studenciNaKierunku() {
@@ -106,10 +95,8 @@ public class Student extends Osoba{
         int b = 0;
         if (!Student.studenci.isEmpty()) {
             System.out.println("Lista studentów na uczelni, na kierunku " + kierunekFiltr + ": ");
-            Iterator var3 = Student.studenci.iterator();
 
-            while(var3.hasNext()) {
-                Student studenci = (Student)var3.next();
+            for (Student studenci : Student.studenci) {
                 if (studenci.getKierunek().equals(kierunekFiltr)) {
                     System.out.println(studenci.toString());
                     ++b;
@@ -128,10 +115,8 @@ public class Student extends Osoba{
         int counter = 0;
         if (!Student.studenci.isEmpty()) {
             System.out.println("Lista studentów na " + rokFiltr + " roku studiów:");
-            Iterator var3 = Student.studenci.iterator();
 
-            while(var3.hasNext()) {
-                Student studenci = (Student)var3.next();
+            for (Student studenci : Student.studenci) {
                 if (studenci.getRok() == rokFiltr) {
                     System.out.println(studenci);
                     ++counter;
@@ -146,25 +131,31 @@ public class Student extends Osoba{
     }
 
     public static void studenciNaRokuIKierunku() {
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner (System.in);
+
         System.out.println("Podaj kierunek, z którego chcesz wyświetlić studentów: ");
         String kierunekFiltr = scan.nextLine();
+
         System.out.println("Podaj rok, z którego chesz wyświetlić studentów: ");
         int rokFiltr = scan.nextInt();
         scan.nextLine();
-        int counter = 0;
-        if (!Student.studenci.isEmpty()) {
-            for(Iterator var4 = Student.studenci.iterator(); var4.hasNext(); System.out.println("Na " + rokFiltr + " na kierunku " + kierunekFiltr + " studiuje " + counter + " studentów.")) {
-                Student studenci = (Student)var4.next();
-                if (studenci.getKierunek().equals(kierunekFiltr) && studenci.getRok() == rokFiltr) {
-                    System.out.println(studenci);
-                    ++counter;
-                }
-            }
-        } else {
-            System.out.println("Lista studentów jest pusta!");
-        }
 
+        int counter = 0;
+
+        if(!studenci.isEmpty()){
+
+            for(Student studenci: studenci){
+                if(studenci.getKierunek().equals(kierunekFiltr) && studenci.getRok() == rokFiltr){
+
+                    System.out.println(studenci);
+                    counter++;
+
+                }
+
+                System.out.println("Na " + rokFiltr + " na kierunku " + kierunekFiltr +
+                        " studiuje " + counter + " studentów.");
+            }
+        } else {System.out.println("Lista studentów jest pusta!");}
     }
 
     public static void wyszukajPoNazwisku() {
@@ -172,11 +163,9 @@ public class Student extends Osoba{
         System.out.println("Podaj nazwisko szukanego studenta: ");
         String nazwiskoFiltr = scan.nextLine();
         int counter = 0;
-        if (!Student.studenci.isEmpty()) {
-            Iterator var3 = Student.studenci.iterator();
+        if (!Student.studenci.isEmpty()) { //jezeli lista nie jest pusta
 
-            while(var3.hasNext()) {
-                Student studenci = (Student)var3.next();
+            for (Student studenci : Student.studenci) {
                 if (studenci.getNazwusko().equals(nazwiskoFiltr)) {
                     System.out.print(studenci);
                     ++counter;
@@ -188,34 +177,32 @@ public class Student extends Osoba{
             } else {
                 System.out.println("Na liście nie ma studentów o takim nazwisku");
             }
-        } else {
+        } else { //jezeli lista jest pusta
             System.out.println("Lista studentów jest pusta");
         }
 
     }
 
-    public static void wyszukajPoAdresie() {
+    public static void wyszukajPoAdresie() { //metoda umozliwaiaiajca szukanie studentow po adresie - porownuje wprowadzo adres z adresem z listy
         Scanner scan = new Scanner(System.in);
         System.out.println("Podaj imię szukanego studenta: ");
         String adresFiltr = scan.nextLine();
         int counter = 0;
-        if (!studenci.isEmpty()) {
-            Iterator var3 = studenci.iterator();
+        if (!studenci.isEmpty()) { //jeseli lista sutdentow nie jest pusta
 
-            while(var3.hasNext()) {
-                Student stud = (Student)var3.next();
+            for (Student stud : studenci) {
                 if (stud.getAdres().equals(adresFiltr)) {
                     System.out.println(stud);
                     ++counter;
                 }
             }
 
-            if (counter == 0) {
+            if (counter == 0) { //jezeli nie znaleziono studenta o szukanum adresie
                 System.out.println("Nie ma osoby z takim adresem na liście studentów");
-            } else {
+            } else {//jezeli znajeziono min 1 studenta o szukanym adresie
                 System.out.println("Na liście znajduje się " + counter + " studentów zamieszkałych w " + adresFiltr);
             }
-        } else {
+        } else { //jezeli lista studentow jest pusta
             System.out.println("Lista studentów jest pusta");
         }
 
@@ -223,10 +210,6 @@ public class Student extends Osoba{
 
     public String toString() {
         return "Student{imie = " + this.imie + ", nazwisko = " + this.nazwisko + ", płeć = " + this.plec + ", wiek = " + this.wiek + ", pesel = " + this.pesel + ", adres = " + this.adres + ", kierunek = " + this.kierunek + ", rok studiów = " + this.rok + "}";
-    }
-
-    private void assertTrue(Kierunek valueOf) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     static {
