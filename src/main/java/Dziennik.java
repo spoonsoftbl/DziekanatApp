@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Dziennik extends Student {
+public class Dziennik extends Student1 {
 
     public static int[] oceny = new int[3]; //tablica z ocenami
     public Przedmiot[] przedmiot = new Przedmiot[3]; //tabilica z przedmiotami
@@ -21,7 +21,11 @@ public class Dziennik extends Student {
 
     public static void ocenyStudentowVoid() { //metoda dodająca pozycje do collection oceny studentow
 
-        for (Student stud : studenci) {
+        Random r = new Random();
+        int max = 5;
+        int min = 2;
+
+        for (Student1 stud : studenci) {
             Dziennik newDziennik = new Dziennik();
             newDziennik.setImie(stud.getImie());
             newDziennik.setNazwisko(stud.getNazwusko());
@@ -48,9 +52,9 @@ public class Dziennik extends Student {
 
             //losowanie liczb dla przedmiotow - nie działa poprawnie - te same wartosci przypisują się oceny[i] dla kazdego studenta
             for (int i = 0; i < oceny.length; ++i) {
-                Random r = new Random();
-                int max = 5;
-                int min = 2;
+//                Random r = new Random();
+//                int max = 5;
+//                int min = 2;
                 int random = r.nextInt(max - min) + min;
                 oceny[i] = random;
             }
