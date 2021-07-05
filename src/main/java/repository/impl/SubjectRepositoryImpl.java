@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
 
-import static enum_parameters.Id.*;
+import static enum_values.Id.*;
 
 public class SubjectRepositoryImpl implements SubjectRepository {
 

@@ -1,4 +1,4 @@
-package enum_parameters;
+package enum_values;
 
 public enum Id {
 

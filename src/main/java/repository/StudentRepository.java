@@ -2,20 +2,26 @@ package repository;
 
 import entities.Student;
 
+import java.util.List;
+
 public interface StudentRepository {
 
     Student getStudentById(int id);
 
-    void getStudentByLastName(String lastName);
+    List getStudentByLastName(String lastName);
 
-    void getStudentByNameAndLastName(String name, String lastName);
+    List getStudentByNameAndLastName(String name, String lastName);
 
-    void saveStudent ();
+    Student saveStudent (Student t);
 
     void deleteStudent (int id);
 
-    void updateStudent (int id);
+    boolean updateStudentName (int id, String name);
 
-    void setStudentMajor (int studId, int majorId);
+    boolean updateStudentLastName (int id, String lastName);
+
+    boolean updateStudentEmail (int id, String email);
+
+    boolean setStudentMajor (int studId, int majorId);
 
 }

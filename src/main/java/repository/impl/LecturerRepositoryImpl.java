@@ -5,11 +5,11 @@ import entities.Subject;
 import repository.LecturerRepository;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static enum_parameters.Id.LECTURER_ID;
+import static enum_values.Id.LECTURER_ID;
+import static enum_values.Id.SUBJECT_ID;
 
 public class LecturerRepositoryImpl implements LecturerRepository {
 
@@ -85,6 +85,7 @@ public class LecturerRepositoryImpl implements LecturerRepository {
             throw new IllegalArgumentException("Incorrect id value!");
         }
 
+
         else {
 
             boolean result = false;
@@ -108,27 +109,40 @@ public class LecturerRepositoryImpl implements LecturerRepository {
     }
 
     @Override
-    public boolean setSubjectForLecturer(int s, int l) {
+    public boolean setSubjectForLecturer(int subjectId, int lecturerId) {
 
         boolean result = false;
 
-        Subject tempSubject = em.find(Subject.class, s);
+        if(subjectId < SUBJECT_ID.getMinId() || subjectId > SUBJECT_ID.getMaxId()) {
+            System.out.println("Incorrect subject ID value!");
+            throw new IllegalArgumentException("Incorrect ID value");
+        }
 
-        Lecturer tempLecturer = em.find(Lecturer.class, l);
+        if(lecturerId < LECTURER_ID.getMinId() || lecturerId > LECTURER_ID.getMaxId()){
+            System.out.println("Incorrect lecturer ID value!");
+            throw new IllegalArgumentException("Incorrect id value!");
+        }
 
-        em.getTransaction().begin();
+        else {
 
-        tempSubject.setSubjectLecturer(tempLecturer);
+            Subject tempSubject = em.find(Subject.class, subjectId);
 
-        em.getTransaction().commit();
+            Lecturer tempLecturer = em.find(Lecturer.class, lecturerId);
 
-        em.close();
+            em.getTransaction().begin();
 
-        System.out.println("Following subject has been assigned to lecturer "
-                + tempLecturer.getLecturerName() + " " + tempLecturer.getLecturerLastname() +": ");
-        System.out.println(tempSubject.getSubjectName());
+            tempSubject.setSubjectLecturer(tempLecturer);
 
-        result = true;
+            em.getTransaction().commit();
+
+            em.close();
+
+            System.out.println("Following subject has been assigned to lecturer "
+                    + tempLecturer.getLecturerName() + " " + tempLecturer.getLecturerLastname() + ": ");
+            System.out.println(tempSubject.getSubjectName());
+
+            result = true;
+        }
 
         return result;
 
@@ -136,33 +150,47 @@ public class LecturerRepositoryImpl implements LecturerRepository {
     }
 
     @Override
-    public List getLecturersSubjectList(int t) {
+    public List getLecturersSubjectList(int lecturerId) {
 
-        Lecturer tempLecturer = em.find(Lecturer.class, t);
-
-        Query q = em.createQuery("SELECT s FROM Subject s JOIN s.subjectLecturer l WHERE l.lecturerId = :lecturerId");
-        q.setParameter("lecturerId", t);
-
-        List<Subject> resultList = q.getResultList();
-
-        if(resultList.isEmpty())System.out.println("Lecturer " + tempLecturer.getLecturerName() +" " +
-                tempLecturer.getLecturerLastname() + " does not have any assigned subjects");
-
+        if(lecturerId < LECTURER_ID.getMinId() || lecturerId > LECTURER_ID.getMaxId()){
+            System.out.println("Incorrect lecturer ID value!");
+            throw new IllegalArgumentException("Incorrect id value!");
+        }
         else {
 
-            System.out.println("Following subjects are assigned to lecturer: " +
-                    tempLecturer.getLecturerName() + " " + tempLecturer.getLecturerLastname());
+            List<Subject> resultList = null;
 
-            for (int i = 0; i < resultList.size(); i++){
+            Lecturer tempLecturer = em.find(Lecturer.class, lecturerId);
 
-                int n = 1;
 
-                System.out.println(n + ". " + resultList.get(i).getSubjectName());
+            Query q = em.createQuery("SELECT s FROM Subject s JOIN s.subjectLecturer l WHERE l.lecturerId = :lecturerId");
+            q.setParameter("lecturerId", lecturerId);
 
-                n++;
+
+            resultList = q.getResultList();
+
+            if (resultList.isEmpty()) {
+                System.out.println("Lecturer " + tempLecturer.getLecturerName() + " " +
+                        tempLecturer.getLecturerLastname() + " does not have any assigned subjects");
+            resultList = null;
             }
-        }
 
-        return resultList;
+            else {
+
+                System.out.println("Following subjects are assigned to lecturer: " +
+                        tempLecturer.getLecturerName() + " " + tempLecturer.getLecturerLastname());
+
+                for (int i = 0; i < resultList.size(); i++) {
+
+                    int n = 1;
+
+                    System.out.println(n + ". " + resultList.get(i).getSubjectName());
+
+                    n++;
+                }
+            }
+
+            return resultList;
+        }
     }
 }

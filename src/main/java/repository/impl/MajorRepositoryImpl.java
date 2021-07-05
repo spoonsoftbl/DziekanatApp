@@ -7,7 +7,7 @@ import repository.MajorRepository;
 import javax.persistence.*;
 import java.util.List;
 
-import static enum_parameters.Id.MAJOR_ID;
+import static enum_values.Id.MAJOR_ID;
 
 public class MajorRepositoryImpl implements MajorRepository {
 

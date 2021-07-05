@@ -1,7 +1,10 @@
 import entities.Lecturer;
+import entities.Subject;
 import org.junit.Assert;
 import org.junit.Test;
 import repository.impl.LecturerRepositoryImpl;
+
+import java.util.List;
 
 public class LecturerRepositoryImplTest {
 
@@ -113,6 +116,71 @@ public class LecturerRepositoryImplTest {
 
         //then
         Assert.assertTrue(true);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setSubjectForLecturerTest_incorrectValue(){
+
+        //given
+        int lecturerId = 99;
+        int subjectId = 9;
+
+        //when
+        lri.setSubjectForLecturer(subjectId, lecturerId);
+
+    }
+
+    @Test
+    public void setSubjectForLecturerTest_correctValue(){
+
+        //given
+        int lecturerId = 100;
+        int subjectId = 10;
+
+        //when
+        lri.setSubjectForLecturer(subjectId, lecturerId);
+
+        //then
+        Assert.assertTrue(true);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getLecturersSubjectListTest_incorrectValue(){
+
+        //given
+        int lecturerId = 99;
+        //when
+        lri.getLecturersSubjectList(lecturerId);
+
+    }
+
+    @Test
+    public void getLecturersSubjectListTest_null(){
+
+        //given
+        int lecturerId = 114;
+
+        //when
+        List<Subject> result = lri.getLecturersSubjectList(lecturerId);
+
+        //then
+        Assert.assertNull(result);
+
+    }
+
+    @Test
+    public void getLecturersSubjectListTest_correctValue(){
+
+        //given
+        int lecturerId = 100;
+
+        //when
+        List<Subject> result = lri.getLecturersSubjectList(lecturerId);
+
+        //then
+        Assert.assertNotNull(result);
 
     }
 

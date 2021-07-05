@@ -4,7 +4,6 @@ import org.junit.Test;
 import repository.impl.MajorRepositoryImpl;
 
 import javax.persistence.NoResultException;
-import java.util.List;
 
 public class MajorRepositoryImplTest {
 
@@ -147,11 +146,8 @@ public class MajorRepositoryImplTest {
         //given
         int tempId = 1;
 
-        //when
-        List resultList = mri.getMajorSubjects(tempId);
-
         //then
-        Assert.assertNotNull(resultList);
+        Assert.assertNotNull(mri.getMajorSubjects(tempId));
 
     }
 
@@ -160,11 +156,8 @@ public class MajorRepositoryImplTest {
         //given
         int tempId = 7;
 
-        //when
-        List resultList = mri.getMajorSubjects(tempId);
-
         //then
-        Assert.assertNull(resultList);
+        Assert.assertNull(mri.getMajorSubjects(tempId));
 
     }
 
