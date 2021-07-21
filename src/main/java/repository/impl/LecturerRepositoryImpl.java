@@ -25,6 +25,7 @@ public class LecturerRepositoryImpl implements LecturerRepository {
     @Override
     public Lecturer getLecturerById(int t) {
 
+       //Think about move this check to saparete method
         if(t < LECTURER_ID.getMinId() || t > LECTURER_ID.getMaxId()){
             System.out.println("Incorrect id value!");
             throw new IllegalArgumentException("Incorrect id value!");
