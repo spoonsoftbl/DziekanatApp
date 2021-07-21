@@ -21,6 +21,14 @@ public class Lecturer {
     @OneToMany(fetch=FetchType.LAZY, mappedBy="subjectLecturer",
             cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Subject> lecturerSubject;
+    
+      public Lecturer() {
+    }
+
+    public Lecturer(String lecturerName, String lecturerLastname) {
+        this.lecturerName = lecturerName;
+        this.lecturerLastname = lecturerLastname;
+    }
 
     public int getLecturerId() {
         return lecturerId;
@@ -54,13 +62,7 @@ public class Lecturer {
         this.lecturerSubject = lecturerSubject;
     }
 
-    public Lecturer() {
-    }
-
-    public Lecturer(String lecturerName, String lecturerLastname) {
-        this.lecturerName = lecturerName;
-        this.lecturerLastname = lecturerLastname;
-    }
+  
 
     @Override
     public String toString() {
